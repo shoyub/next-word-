@@ -1,4 +1,4 @@
-tf-keras
+keras
 numpy
 pandas
 scikit-learn
