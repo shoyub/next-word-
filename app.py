@@ -37,8 +37,8 @@ if st.button("Predict Next Word"):
 import streamlit as st
 import numpy as np
 import pickle
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tf_keras.models import load_model
+from tf_keras.preprocessing.sequence import pad_sequences
 
 # Load both models
 lstm_model = load_model('next_word_lstm.h5')
