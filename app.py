@@ -51,6 +51,13 @@ with open('tokenizer.pickle', 'rb') as handle:
 # Reverse index (fast lookup)
 index_word = {index: word for word, index in tokenizer.word_index.items()}
 
+# ---- OPTIONAL: Hardcode metrics (BEST PRACTICE for Streamlit) ----
+lstm_acc = 0.85   # replace with your actual value
+lstm_loss = 1.20
+
+gru_acc = 0.83    # replace with your actual value
+gru_loss = 1.30
+
 # Prediction function
 def predict_next_word(model, tokenizer, text, max_sequence_len):
     token_list = tokenizer.texts_to_sequences([text])[0]
@@ -78,6 +85,24 @@ if st.button("Predict Next Word"):
     gru_pred = predict_next_word(gru_model, tokenizer, input_text, max_sequence_len)
 
     st.subheader("Predictions:")
+    st.write(" LSTM:", lstm_pred)
+    st.write(" GRU:", gru_pred)
 
-    st.write(" LSTM Prediction:", lstm_pred)
-    st.write(" GRU Prediction:", gru_pred)
+    # ---- Metrics Section ----
+    st.subheader("Model Performance")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric("LSTM Accuracy", f"{lstm_acc:.4f}")
+        st.metric("LSTM Loss", f"{lstm_loss:.4f}")
+
+    with col2:
+        st.metric("GRU Accuracy", f"{gru_acc:.4f}")
+        st.metric("GRU Loss", f"{gru_loss:.4f}")
+
+    # ---- Best Model ----
+    if lstm_acc > gru_acc:
+        st.success(" LSTM performs better")
+    else:
+        st.success(" GRU performs better")
